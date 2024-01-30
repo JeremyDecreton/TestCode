@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countrajax</title>
+</head>
+<body>
+    <button onclick="showQuote()">Montre moi la sagesse</button>
+    <div id="quote"></div>
+
+    <script>
+    function showQuote() {
+        let xhr = new XMLHttpRequest();
+
+        // Méthode XMLHTTP pour initier la requête
+        xhr.open('GET', 'http://localhost:3000/quote', true);
+        
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                console.log('success');
+                let quoteObject = JSON.parse(this.responseText);
+                let quoteText = quoteObject.quote;
+                document.getElementById('quote').innerText = quoteText;
+            } else {
+                console.error('Erreur lors de la récupération de la citation:', xhr.status);
+                document.getElementById('quote').innerText = 'Erreur lors de la récupération de la citation.';
+            }
+        };
+        
+        // Méthode XMLHTTP pour envoyer la requête
+        xhr.send();
+    }
+    </script>
+</body>
+</html>
