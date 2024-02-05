@@ -8,7 +8,7 @@ function toggle() {
 
 // -- ICI Juste un appel de fonction :
 
-// toggle()
+toggle()
 
 // -- ICI le callback JS nommé :
 
@@ -46,17 +46,24 @@ function secondAction() {
 // firstAction()
 // setTimeout(secondAction, 5000)
 
+
+
+
+
+
+
+
 // ** Async lvl:1 ** //
 
 //Action deux se lancera 3 sec après action une
-// function firstAction() {
-//     console.log('Je suis la première action')
-//     setTimeout(secondAction, 3000)
-// }
+function firstAction() {
+    console.log('Je suis la première action')
+    setTimeout(secondAction, 3000)
+}
 
-// function secondAction() {
-//     console.log('Je suis la seconde action')
-// }
+function secondAction() {
+    console.log('Je suis la seconde action')
+}
 
 //Ici, la première action se lance au bout de 2 sec ce qui déclenchera le timeout inclut dans l'action une
 //Ainsi la deuxième action se lancera au bout de 5 ( 2 + 3 ) secondes au total
@@ -65,14 +72,14 @@ function secondAction() {
 
 //  ** Async Lvl:2 ** //
 
-// function primeraAction(callback) {
-//     console.log('Yo soy la primera action')
-//     setTimeout(callback, 3000)
-// }
+function primeraAction(callback) {
+    console.log('Yo soy la primera action')
+    setTimeout(callback, 3000)
+}
 
-// function secondaAction() {
-//     console.log('Yo soy la seconda action')
-// }
+function secondaAction() {
+    console.log('Yo soy la seconda action')
+}
 
 //Je tente d'ajouter un paramètre à la fonction first Action, ce qui du coup, appelle la fonction car en JS un appel se fait : "functionName ()" 
 
@@ -82,15 +89,15 @@ function secondAction() {
 
 //Comment refaire fonctionner ça ? 
 
-function ersteHandlung(callback, message) {
+function ersteHandlung(callback) {
     console.log('Ich bin die erste Handlung')
-    console.log(message)
+
     setTimeout(callback, 3000)
 }
 
-function zweitHandlung(message) {
+function zweitHandlung() {
     console.log('Ich bin zweite Handlung')
-    console.log(message)
+
 
 }
 //Je dois anonymiser ma fonction => appel de function : functionName() // Anonymyser une fonction : () => functionName()
@@ -99,13 +106,13 @@ function zweitHandlung(message) {
 
 // Si je veux aller plus loin, je peux même donner un paramètre dans ma deuxième fonction ce qui l'appellera tout en l'anonymysant pour la renvoyer à la suite de ma première fonction, et pourquoi pas ajouter un paramètre en plus dans la première fonction
 
-function ersteHandlung(callback, message) {
+function førsteHandling (callback, message) {
     console.log(message)
     setTimeout(callback, 3000)
 }
 
-function zweitHandlung(message) {
+function andreHandling(message) {
     console.log(message)
 
 }
-setTimeout( () => ersteHandlung( () => zweitHandlung(/* Message deuxième fonction */"Hvorfor ikke?"), /* Message Première fonction */  "Jeg tror jeg forstår"), 2000)
+// setTimeout( () => førsteHandling( () => andreHandling(/* Message deuxième fonction */"Snakker du ikke norsk?"), /* Message Première fonction */  "Synd for deg!"), 2000)

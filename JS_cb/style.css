@@ -1,5 +1,9 @@
 button {
+    height: 200px;
+    width: 400px;
     background-color: red;
+    font-size: xx-large;
+    border: solid 6px ;
 }
 .altColor{
     background-color: greenyellow;
