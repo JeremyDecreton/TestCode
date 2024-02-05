@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+   
+    <title>FlagQuizz</title>
+</head>
+<body>
+
+    <button id="jokerButton"> Cliquez-ici pour utiliser un joker !</button>
+    <input id= "userInput" type="text" placeholder="Nom du pays ?">
+    <button onclick="verifyInput(callAPI)"> Vérifier </button>
+    <p id="result"></p>
+    <p id="cptJoker"></p>
+    <div > Vos bonnes réponses : <span id="cpt">0</span></div>
+    <div id="hearts">
+        <i class="heart fa-solid fa-heart fa-bounce" id="heart1" style="color: #f86c5e;"></i>
+        <i class="heart fa-solid fa-heart fa-bounce" id="heart2" style="color: #f86c5e;"></i>
+        <i class="heart fa-solid fa-heart fa-bounce" id="heart3" style="color: #f86c5e;"></i>
+    </div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <p> Dommage ! Retente ta chance ! </p>
+            <button id="retryButton">Réessayer</button>
+        </div>
+    </div>    
+</body>
+<script src="app.js"></script>
+<script src="https://kit.fontawesome.com/bfb56a61fd.js" crossorigin="anonymous"></script>
+</html>
