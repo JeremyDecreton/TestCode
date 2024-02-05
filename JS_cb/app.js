@@ -8,7 +8,7 @@ function toggle() {
 
 // -- ICI Juste un appel de fonction :
 
-toggle()
+// toggle()
 
 // -- ICI le callback JS nommé :
 
