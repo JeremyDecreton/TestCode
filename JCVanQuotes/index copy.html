@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Wisdom and Kicks</title>
+</head>
+<body>
+
+    <button class="custom-btn btn-14" onclick="showQuote()">Montre moi la sagesse</button>
+
+    <div class="quote-container">
+
+        <div id="quote"></div>
+
+    </div>
+
+    <div class="loader" id="loader"></div>
+
+    <script>
+    //Appel API
+    function showQuote() {
+        console.log("J'ai appuyé sur le bouton")
+        let xhr = new XMLHttpRequest();
+
+        document.getElementById('loader').style.display = 'block';
+
+        // Méthode XMLHTTP pour initier la requête
+        console.log("Ouverture de la connexion à l'API...");
+        xhr.open('GET', 'http://localhost:3000/', true);
+        console.log("Connexion à l'API établie avec succès.");
+
+        xhr.onload = function () {
+            let responseText = xhr.responseText;
+            setTimeout(function() {
+            console.log("Fin du chargement, Requête reçu")
+            if (xhr.status == 200) {
+                console.log('Requête correspond à citation');
+                let quoteObject = JSON.parse(responseText);
+                let quoteText = quoteObject.quote;
+                document.getElementById('quote').innerText = quoteText;
+                console.log("Citation Chargée")
+            } else {
+                console.error('Erreur lors de la récupération de la citation:', xhr.status);
+                document.getElementById('quote').innerText = 'Erreur lors de la récupération de la citation.';
+            }
+            
+            document.getElementById('loader').style.display = 'none';
+        }, 1000)
+        console.log("Chargement lancé");
+        };
+        
+        // Méthode XMLHTTP pour envoyer la requête
+        console.log("Envoi de la requête au serveur...");
+        xhr.send();
+    }
+    </script>
+</body>
+</html>
