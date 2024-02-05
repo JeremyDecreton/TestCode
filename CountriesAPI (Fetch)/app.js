@@ -13,13 +13,14 @@ let fautes = 0;
 //Établissements des fonctions 
 
 function callAPI() {
-    fetch('https://restcountries.com/v2/all')
+    console.log("Je lance le call")
+    fetch('https://restcountries.com/v3.1/all')
 //same thing as .then(function(response) {
 .then(response => {
     return response.json()
 }).then(json => {
     randomIndex = json[Math.floor(Math.random() * 250)]
-    flag.src = randomIndex.flag
+    flag.src = randomIndex.flags.svg
     console.log('Drapeau Chargé')
 }).catch(error => {
     console.log('errors:'+ error.message)
@@ -27,8 +28,9 @@ function callAPI() {
 }
 
 function useJoker() {
-    const messageElement = document.getElementById("cptJoker");;
+    const messageElement = document.getElementById("cptJoker");
     if (jokers > 0) {
+        document.getElementById("result").innerText = " La bonne réponse était " + randomIndex.translations.fra.official;
         jokers--;
         console.log(jokers)
         if(jokers > 1) {
@@ -36,7 +38,6 @@ function useJoker() {
         } else if (jokers == 1) {
         messageElement.innerHTML =`Il ne vous reste plus qu'un joker.`
         }
-        console.log("Je lance le call")
         callAPI();
     } else {
         messageElement.innerHTML = "Vous n'avez plus de jokers !";
@@ -77,9 +78,10 @@ function verifyInput(callback) {
     console.log("Requête récupérée et modifiée")
     console.log(userInput)
     console.log(randomIndex)
-    var reponse = randomIndex.translations.fr.toLowerCase()
-    if (userInput === reponse) {
-        document.getElementById("result").innerText = 'Correct !'
+    var reponse = randomIndex.translations.fra.official.toLowerCase()
+    var reponseCommon = randomIndex.translations.fra.common.toLowerCase()
+    if (userInput === reponse || userInput === reponseCommon) {
+        document.getElementById("result").innerText = 'Correct !' + randomIndex.translations.fra.official 
         cptGoodAnswer++;
         if (cptGoodAnswer % 3 === 0 ) {
             jokers++;
@@ -92,10 +94,11 @@ function verifyInput(callback) {
         updateHearts(fautes)
         console.log(fautes)
         if (fautes === 3) {
-            document.getElementById("popup").style.display = "block"; 
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("result").innerText = "Faux ! La bonne réponse était " + randomIndex.translations.fra.official; 
             disableButtons();  
         } else {
-        document.getElementById("result").innerText = "Faux ! La bonne réponse était " + randomIndex.translations.fr;
+        document.getElementById("result").innerText = "Faux ! La bonne réponse était " + randomIndex.translations.fra.official;
         callback();
         }
     }
@@ -131,10 +134,10 @@ function updateHearts(fautes) {
     for (let i = 0; i < hearts.length; i++) {
         if (i < fautes) {
             hearts[i].classList.remove('fa-solid', 'fa-heart', 'fa-bounce');
-            hearts[i].classList.add('fa-regular', 'fa-heart');
+            hearts[i].classList.add('fa-solid', 'fa-heart-crack');
             hearts[i].style.color = '#837272';
         } else {
-            hearts[i].classList.remove('fa-regular', 'fa-heart');
+            hearts[i].classList.remove('fa-solid', 'fa-heart-crack');
             hearts[i].classList.add('fa-solid', 'fa-heart', 'fa-bounce');
             hearts[i].style.color = '#f86c5e';
         }

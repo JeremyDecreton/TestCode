@@ -87,7 +87,13 @@ function adjustQuoteContainer() {
         
         console.log("A REMPLIR");
         xhr.send();
-        
+
+        xhr.onerror =  () => {
+        console.error('Erreur lors de la connexion à l\'API.');
+        quoteContainer.innerText = "L\'api n\'est pas assez aware. Elle n'a pas supporté. On travaille à régler ce problème au plus vite. Merci pour votre patience.";
+        quoteContainer.style.display = 'block';
+        loader.style.display = 'none';
+        }
     }
     console.log("A REMPLIR");
     
