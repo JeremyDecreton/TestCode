@@ -1,3 +1,5 @@
+//Code API
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -13,21 +15,18 @@ const pool = mysql.createPool({
     database: 'jcvanquotes'
 });
 
-// Middleware pour autoriser les requêtes CORS
+// Middleware pour autoriser les requêtes CORS 
 app.use((request, response, next) => {
     response.header('Access-Control-Allow-Origin', '*');
     response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
 
+//Pour le Json
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (request, response) => {
-    response.json({ info: 'Display Wisdom and Kicks like no Belgian before' });
-});
-
-app.get('/quote', (request, response) => {
     pool.query('SELECT quote FROM quotes ORDER BY RAND() LIMIT 1', (error, results) => {
         if (error) {
             console.error('Erreur lors de la récupération de la citation:', error);
@@ -41,7 +40,6 @@ app.get('/quote', (request, response) => {
         response.json(results[0]);
     });
 });
-
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`);

@@ -10,40 +10,103 @@
     <title>Wisdom and Kicks</title>
 </head>
 <body>
-    <button class="custom-btn btn-14" onclick="showQuote()">Montre moi la sagesse</button>
+
+    <button class="custom-btn btn-14" onclick="showQuote()">Montre-moi la sagesse</button>
+    <!-- Ajout de l'audio -->
+    <audio id="audioPlayer" src="assets/OnlyTime.mp3" loop></audio>
+
+    <!-- Bouton pour contrôler la musique -->
+    <button id="toggleMusic" class="custom-btn btn-14 musicButton" onclick="toggleMusic()">Musique On/Off</button>
     <div class="quote-container">
+
         <div id="quote"></div>
+
     </div>
+
     <div class="loader" id="loader"></div>
+
     <script>
+//Ajustement QuoteContainer 
+
+function adjustQuoteContainer() {
+        var quoteContainer = document.querySelector('.quote-container');
+        var quoteText = document.getElementById('quote').innerText;
+        var quoteTextLength = quoteText.length;
+
+        var marginTop = Math.max(200 - quoteTextLength * 2, 85);
+
+        var width = Math.min(quoteTextLength * 20, 800);
+
+        //Définir le marginTop en fonction du calcul
+        quoteContainer.style.marginTop = marginTop + 'px';
+    
+        //Définir le width en focntion du calcul
+        quoteContainer.style.width = width + 'px';
+    }
+
+    //Appel API
     function showQuote() {
+
+        console.log("A REMPLIR")
+
+        var quoteContainer = document.getElementById('quote');
+        var loader = document.getElementById('loader');
+
         let xhr = new XMLHttpRequest();
+  
+    // Cacher la citation et afficher l'animation de chargement
+    quoteContainer.style.display = 'none';
+    loader.style.display = 'block';
 
-        document.getElementById('loader').style.display = 'block';
+        // Méthode XMLHTTP pour initier la requête / XHR = ajax
+        console.log("A REMPLIR");
+        xhr.open('GET', 'http://localhost:3000/', true);
+        console.log("A REMPLIR");
 
-        // Méthode XMLHTTP pour initier la requête
-        xhr.open('GET', 'http://localhost:3000/quote', true);
-        
         xhr.onload = function () {
             let responseText = xhr.responseText;
             setTimeout(function() {
+            console.log("A REMPLIR")
             if (xhr.status == 200) {
-                console.log('success');
+                console.log('A REMPLIR');
                 let quoteObject = JSON.parse(responseText);
                 let quoteText = quoteObject.quote;
-                document.getElementById('quote').innerText = quoteText;
+                quoteContainer.innerText = quoteText;
+                quoteContainer.style.display = 'block';
+                loader.style.display = 'none';
+                adjustQuoteContainer();
             } else {
                 console.error('Erreur lors de la récupération de la citation:', xhr.status);
                 document.getElementById('quote').innerText = 'Erreur lors de la récupération de la citation.';
             }
             
             document.getElementById('loader').style.display = 'none';
-        }, 1000);
+        }, 1000)
+        console.log("A REMPLIR");
         };
         
-        // Méthode XMLHTTP pour envoyer la requête
+        console.log("A REMPLIR");
         xhr.send();
+        
     }
+    console.log("A REMPLIR");
+    
+
+//Partie Musique
+
+// Contrôler la musique
+var audioPlayer = document.getElementById('audioPlayer');
+
+function toggleMusic() {
+    var toggleButton = document.getElementById('toggleMusic');
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        toggleButton.innerText = 'Couper la Musique';
+    } else {
+        audioPlayer.pause();
+        toggleButton.innerText = 'Reprendre';
+    }
+}
     </script>
 </body>
 </html>
